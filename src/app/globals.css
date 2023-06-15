@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900;1000&family=Poppins:wght@400;500;600;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -12,11 +14,11 @@ html {
 body {
   font-weight: 400;
   height: 100vh;
-  color: #333;
-  background-image: linear-gradient(to top left, #753682 0%, #bf2e34 100%);
+  color: #235390;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(to top left, #235390 0%, #235390 100%);
 }
 
 main {
@@ -27,7 +29,201 @@ main {
   backdrop-filter: blur(200px);
   filter: blur();
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
-  border-radius: 9px;
   overflow: hidden;
   display: flex;
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: 0.5;
+  color: #afafaf;
+}
+
+input {
+  color: white;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 3.5px rgba(0, 0, 0, 0.3);
+}
+
+.welcome--container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background: #235390;
+  background-image: url("/bg-welcome.png");
+  margin: 0;
+  padding: 0;
+
+  opacity: 1;
+  transition: opacity 2s;
+}
+
+.navbar--container {
+  padding: 2rem 15%;
+  background-color: #235390;
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  align-items: center;
+  text-transform: uppercase;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.logotype--img {
+  height: 4rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.welcome--content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.welcome-text {
+  font-weight: 800;
+  text-align: center;
+  font-size: 3rem;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 5px;
+  animation-duration: 1s;
+  animation-name: animate-fade;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
+  position: relative;
+  color: #fff;
+}
+
+.animation {
+  animation-duration: 1s;
+  animation-name: animate-fade;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes animate-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shine {
+  0% {
+    background-position-x: -500%;
+  }
+  100% {
+    background-position-x: 500%;
+  }
+}
+
+.hero {
+  display: flex;
+  gap: 5rem;
+  padding: 0 10%;
+  margin-top: 5rem;
+}
+
+.bot {
+  height: 70%;
+}
+
+.button {
+  background-color: #58cc02;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  text-transform: uppercase;
+  padding: 15px 70px;
+  width: 300px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  font-family: "Inter", sans-serif;
+  border-bottom: solid #58a700;
+  border-bottom-width: 4px;
+}
+
+.button:hover {
+  background-color: #61db03;
+}
+
+.hero--content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.input-stones {
+  width: 300px;
+  background-color: #235390;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  text-transform: uppercase;
+  padding: 15px 70px;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 1px;
+  font-family: "Inter", sans-serif;
+  border: solid #042c60;
+  border-bottom-width: 4px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  background-color: #0a4a82;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  width: 100vw;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 15%;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+}
+
+.avatar--img {
+  height: 4.5rem;
+  border: 1.5px solid white;
+  border-radius: 100%;
+}
+
+.arrow {
+  height: 2rem;
 }

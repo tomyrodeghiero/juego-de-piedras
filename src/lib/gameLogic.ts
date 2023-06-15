@@ -1,38 +1,41 @@
-type Jugador = "C" | "H";
-type Estado = [Jugador, number];
-type Resultado = "CPerdio" | "CGano";
+export type Jugador = "C" | "H";
+export type Estado = [Jugador, number];
+export type Resultado = "CPerdio" | "CGano";
 
 export const jugadas = [1, 3, 4];
 
-const otroJugador = (jugador: Jugador): Jugador =>
-  jugador === "C" ? "H" : "C";
+export function otroJugador(jugador: Jugador): Jugador {
+  return jugador === "C" ? "H" : "C";
+}
 
-export const hacerJugada = (jugada: number, estado: Estado): Estado => {
-  if (!jugadas.includes(jugada)) {
+export function hacerJugada(jugada: number, estado: Estado): Estado {
+  const [jugador, piedras] = estado;
+  if (!jugadas.includes(jugada) || piedras - jugada < 0) {
     throw new Error("Jugada inválida");
   }
-  return [otroJugador(estado[0]), estado[1] - jugada];
-};
+  return [otroJugador(jugador), piedras - jugada];
+}
 
-const evalEstado = (estado: Estado): Resultado => {
-  const [jugador, piedras] = estado;
-  if (piedras === 0) {
-    return jugador === "C" ? "CPerdio" : "CGano";
-  }
+export function evalEstado(estado: Estado): Resultado {
+  const [j, k] = estado;
+  if (k === 0) return j === "C" ? "CPerdio" : "CGano";
+
   const posibleJugs = jugadas
-    .filter((jugada) => jugada <= piedras)
-    .map((jugada) => [otroJugador(jugador), piedras - jugada] as Estado);
+    .filter((i) => i <= k)
+    .map((i) => [otroJugador(j), k - i] as Estado);
 
-  if (jugador === "C") {
-    return Math.max(...posibleJugs.map(evalEstado));
+  if (j === "C") {
+    return posibleJugs
+      .map(evalEstado)
+      .reduce((a, b) => (a > b ? a : b), "CPerdio");
+  } else {
+    return posibleJugs
+      .map(evalEstado)
+      .reduce((a, b) => (a < b ? a : b), "CGano");
   }
-  if (jugador === "H") {
-    return Math.min(...posibleJugs.map(evalEstado));
-  }
-  throw new Error("Jugada no válida");
-};
+}
 
-export const mejorJug = (estado: Estado): number => {
+export function mejorJug(estado: Estado): number {
   const [jugador, piedras] = estado;
   const jugadasValidas = jugadas.filter(
     (jugada) =>
@@ -40,44 +43,14 @@ export const mejorJug = (estado: Estado): number => {
       evalEstado([otroJugador(jugador), piedras - jugada]) ===
         (jugador === "C" ? "CGano" : "CPerdio")
   );
-  const obtenerMejorJugada = (
-    jugadas: number[],
-    f: (arr: number[]) => number
-  ) => (jugadas.length === 0 ? 1 : f(jugadas));
 
   return jugador === "C"
-    ? obtenerMejorJugada(jugadasValidas, Math.max)
-    : obtenerMejorJugada(jugadasValidas, Math.min);
-};
+    ? Math.max(...jugadasValidas)
+    : Math.min(...jugadasValidas);
+}
 
-const jugar = async (estado: Estado): Promise<void> => {
-  console.log(`Hay ${estado[1]} piedras, cuantas saca?:`);
-  const jugada = parseInt(
-    prompt("Ingrese el número de piedras que desea sacar:")
-  );
-  const [jugador, piedras] = hacerJugada(jugada, estado);
-  if (piedras === 0) {
-    console.log("Gano!");
-    return;
-  }
-  const mj = mejorJug([jugador, piedras]);
-  console.log(`mi jugada: ${mj}`);
-  if (piedras - mj === 0) {
-    console.log("Perdió!");
-    return;
-  }
-  await jugar(["H", piedras - mj]);
-};
-
-export const comenzarJuego = async (cant: number): Promise<void> => {
-  if (cant <= 0) {
-    throw new Error("La cantidad de piedras debe ser mayor que 0.");
-  }
-  await jugar(["H", cant]);
-};
-
-const juegosGanadores = (i: number): number[] => {
-  return Array.from({ length: i }, (_, i) => i + 1).filter(
+export function juegosGanadores(i: number): number[] {
+  return Array.from({ length: i }, (_, x) => x + 1).filter(
     (x) => evalEstado(["H", x]) === "CGano"
   );
-};
+}
